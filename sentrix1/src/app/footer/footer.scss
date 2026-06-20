@@ -1,0 +1,155 @@
+:host {
+  --ink: #e4e8ed;
+  --ink-dim: #8a929d;
+  --ink-faint: #5b636e;
+  --accent: #4a8f8a;
+  --line: rgba(255, 255, 255, 0.1);
+
+  display: block;
+  // Sit above the landing's fixed canvas (z-index 0) / overlay (z-index 1).
+  position: relative;
+  z-index: 2;
+  background: #04060a;
+  color: var(--ink);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.footer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4.5rem 2rem 2.5rem;
+}
+
+// ---- link columns ---------------------------------------------------------
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+}
+.col-title {
+  margin: 0 0 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink-dim);
+}
+.col-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.col-links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+  &:hover { color: var(--accent); }
+}
+
+// ---- brand + signup band --------------------------------------------------
+.footer-band {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 4.5rem;
+}
+.brand-block {
+  max-width: 28rem;
+}
+.wordmark {
+  display: inline-block;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #f2f5f8;
+  text-decoration: none;
+}
+.mission {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+.signup-block {
+  flex: 1 1 320px;
+  max-width: 30rem;
+}
+.signup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.6rem;
+}
+.signup-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--ink);
+  font-size: 1rem;
+  padding: 0.4rem 0;
+  &::placeholder { color: var(--ink-dim); }
+}
+.signup-btn {
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+  &:hover { color: var(--accent); }
+}
+.signup-note {
+  margin: 0.8rem 0 0;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+.signup-thanks {
+  margin: 0;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+// ---- bottom strip ---------------------------------------------------------
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4rem;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+.locale {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.globe { font-size: 0.95rem; opacity: 0.7; }
+.locale-select {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink-dim);
+  padding: 0.2rem 0.4rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  option { background: #04060a; }
+}
+
+// ---- responsive -----------------------------------------------------------
+@media (max-width: 900px) {
+  .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 2rem; }
+  .footer-band { align-items: flex-start; }
+}
+@media (max-width: 520px) {
+  .footer-cols { grid-template-columns: 1fr; }
+}

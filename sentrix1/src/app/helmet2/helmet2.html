@@ -1,0 +1,27 @@
+<div class="helmet-view">
+  <header class="hv-head">
+    <h2>Helmet Detection 2 <span class="cv-tag">face-gated CV</span></h2>
+    <div class="status" [class.on]="hatOn()" [class.off]="!hatOn()">
+      <span class="dot"></span>
+      {{ hatOn() ? 'HAT ON — helmet on face' : 'NO HELMET' }}
+    </div>
+  </header>
+
+  <div class="stage">
+    <video #video class="cam" playsinline muted></video>
+    <canvas #overlay class="overlay" width="640" height="480"></canvas>
+
+    @if (!cameraReady() && !errorMsg()) {
+      <div class="loading">Requesting camera…</div>
+    }
+    @if (errorMsg()) {
+      <div class="error">{{ errorMsg() }}</div>
+    }
+  </div>
+
+  <footer class="hv-foot">
+    <span [class.lit]="faceFound()">face: <b>{{ faceFound() ? 'detected' : 'none' }}</b> ({{ skinPct() }}%)</span>
+    <span>helmet-on-head: <b>{{ helmetPct() }}%</b></span>
+    <span>rejects yellow <b>shirt / skin</b> — only a hat on a face counts</span>
+  </footer>
+</div>

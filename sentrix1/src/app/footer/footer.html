@@ -1,0 +1,67 @@
+<footer class="footer">
+  <!-- link columns -->
+  <nav class="footer-cols">
+    @for (col of columns; track col.title) {
+      <div class="footer-col">
+        <h3 class="col-title">{{ col.title }}</h3>
+        <ul class="col-links">
+          @for (item of col.links; track item.label) {
+            <li>
+              @if (item.link) {
+                <a [routerLink]="item.link">{{ item.label }}</a>
+              } @else {
+                <a [href]="item.href">{{ item.label }}</a>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </nav>
+
+  <!-- brand + signup band -->
+  <div class="footer-band">
+    <div class="brand-block">
+      <a class="wordmark" routerLink="/">SENTRIX</a>
+      <p class="mission">
+        Our mission at Sentrix is to keep every worker safe — every shift,
+        in real time.
+      </p>
+    </div>
+
+    <div class="signup-block">
+      @if (!submitted()) {
+        <form class="signup" (submit)="onSubmit($event)">
+          <input
+            class="signup-input"
+            type="email"
+            placeholder="Enter your email"
+            [value]="email()"
+            (input)="email.set($any($event.target).value)"
+            required
+          />
+          <button class="signup-btn" type="submit">Submit</button>
+        </form>
+        <p class="signup-note">
+          By signing up, I agree with the data protection policy.
+        </p>
+      } @else {
+        <p class="signup-thanks">Thanks — we'll be in touch about Sentrix.</p>
+      }
+    </div>
+  </div>
+
+  <!-- bottom strip -->
+  <div class="footer-bottom">
+    <span class="copy">© {{ year }} Sentrix</span>
+    <label class="locale">
+      <span class="globe" aria-hidden="true">🌐</span>
+      <select class="locale-select" aria-label="Language">
+        <option>EN</option>
+        <option>ES</option>
+        <option>FR</option>
+        <option>DE</option>
+      </select>
+    </label>
+  </div>
+</footer>

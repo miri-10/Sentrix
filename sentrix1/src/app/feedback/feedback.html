@@ -1,0 +1,32 @@
+<section class="feedback">
+  <header class="fb-head">
+    <span class="fb-badge">Feedback</span>
+    <h2 class="fb-title">What teams on site say</h2>
+    <p class="fb-sub">Hear from the people who keep crews safe every shift.</p>
+  </header>
+
+  <div class="fb-columns">
+    @for (col of columns; track $index) {
+      <div
+        class="fb-col"
+        [class.hide-md]="$index === 1"
+        [class.hide-lg]="$index === 2"
+      >
+        <div class="fb-track" [style.animation-duration]="(15 + $index * 2) + 's'">
+          @for (t of loop(col); track $index) {
+            <figure class="fb-card">
+              <blockquote class="fb-text">{{ t.text }}</blockquote>
+              <figcaption class="fb-author">
+                <img class="fb-avatar" [src]="t.image" [alt]="t.name" loading="lazy" />
+                <span class="fb-meta">
+                  <span class="fb-name">{{ t.name }}</span>
+                  <span class="fb-role">{{ t.role }}</span>
+                </span>
+              </figcaption>
+            </figure>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

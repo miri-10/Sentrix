@@ -1,0 +1,323 @@
+:host {
+  // Muted, low-glare industrial palette — deliberately not bright.
+  --bg: #06080b;
+  --ink: #c6ccd4;
+  --ink-dim: #767f8b;
+  --accent: #4a8f8a;   // desaturated teal
+  --amber: #b8893f;    // muted safety amber
+  --line: rgba(255, 255, 255, 0.08);
+
+  display: block;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.hero-container {
+  position: relative;
+  width: 100%;
+}
+
+// Fixed WebGL backdrop sits behind everything that scrolls over it.
+.hero-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  display: block;
+}
+
+// subtle vignette so text stays readable over the scene
+.hero-container::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(180deg, rgba(6, 8, 11, 0.2) 0%, rgba(6, 8, 11, 0.65) 100%);
+}
+
+// ---- top nav --------------------------------------------------------------
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 2.4rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-mark {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(74, 143, 138, 0.5);
+}
+.brand-name {
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  font-size: 0.85rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.8rem;
+  a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: color 0.25s ease;
+    &:hover { color: var(--ink); }
+  }
+}
+
+// ---- side menu ------------------------------------------------------------
+.side-menu {
+  position: fixed;
+  left: 2.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+.menu-icon span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 4px 0;
+  background: var(--ink-dim);
+}
+.vertical-text {
+  writing-mode: vertical-rl;
+  letter-spacing: 0.4em;
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+}
+
+// ---- hero copy ------------------------------------------------------------
+.hero-content {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.42em;
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-bottom: 1.6rem;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(3.5rem, 13vw, 11rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: #e8ecf1;
+}
+.title-char {
+  display: inline-block;
+  will-change: transform;
+}
+
+.hero-subtitle {
+  margin-top: 1.8rem;
+  color: var(--ink-dim);
+  font-size: clamp(0.95rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  p { margin: 0.1rem 0; }
+}
+
+.hero-actions {
+  margin-top: 2.6rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn {
+  text-decoration: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  &.primary {
+    background: var(--accent);
+    color: #04110f;
+    &:hover { background: #5aa49e; }
+  }
+  &.ghost {
+    border: 1px solid var(--line);
+    color: var(--ink);
+    &:hover { border-color: var(--accent); color: #fff; }
+  }
+}
+
+// ---- scroll indicator -----------------------------------------------------
+.scroll-progress {
+  position: fixed;
+  bottom: 2rem;
+  right: 2.4rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+  color: var(--ink-dim);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+}
+.progress-track {
+  width: 120px;
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.1s linear;
+}
+
+// ---- scroll-through sections ---------------------------------------------
+.scroll-sections {
+  position: relative;
+  z-index: 5;
+}
+.content-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+.section-title {
+  margin: 0;
+  font-size: clamp(2.6rem, 9vw, 7rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #e8ecf1;
+}
+.section-copy {
+  margin-top: 1.4rem;
+  color: var(--ink-dim);
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  p { margin: 0.1rem 0; }
+}
+
+// ---- closing tool grid ----------------------------------------------------
+.tools-section {
+  position: relative;
+  z-index: 5;
+  padding: 6rem 1.5rem 4rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(4, 6, 9, 0.92) 22%);
+  text-align: center;
+}
+.tools-heading {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0 0 3rem;
+  color: #e8ecf1;
+}
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.tool-card {
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  padding: 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  &:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    background: rgba(74, 143, 138, 0.06);
+  }
+}
+.tool-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--amber);
+}
+.tool-name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.tool-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ink-dim);
+}
+.tool-cta {
+  margin-top: auto;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.landing-foot {
+  max-width: 1000px;
+  margin: 3.5rem auto 0;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  .muted { color: #4a525d; }
+}
+
+@media (max-width: 640px) {
+  .side-menu,
+  .nav-links { display: none; }
+  .top-nav { justify-content: center; }
+  .scroll-progress { right: 1.2rem; }
+}

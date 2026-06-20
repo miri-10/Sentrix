@@ -1,0 +1,103 @@
+<div class="dashboard">
+  <!-- ============ TOP BAND ============ -->
+  <header class="top-band">
+    <!-- left: environment sensor signals -->
+    <aside class="env-panel">
+      <div class="env-item">
+        <span class="env-label">humidity</span>
+        <span class="env-value">{{ humidity() }}<small>%</small></span>
+      </div>
+      <div class="env-item">
+        <span class="env-label">temperature</span>
+        <span class="env-value">{{ temperature() }}<small>°C</small></span>
+      </div>
+      <div class="env-item" [class.danger]="gasStatus() === 'danger'" [class.warn]="gasStatus() === 'warn'">
+        <span class="env-label">gas detect</span>
+        <span class="env-value">{{ gasDetect() }}<small>ppm</small></span>
+      </div>
+
+      <div class="headcount">
+        <div class="hc-block">
+          <span class="hc-num">{{ totalHealthyWorkers() }}/{{ totalWorkers() }}</span>
+          <span class="hc-label">total healthy workers</span>
+        </div>
+        <button class="outliners-btn" type="button">outliners</button>
+      </div>
+    </aside>
+
+    <!-- center: company name -->
+    <div class="company-card">
+      <span class="company-name">{{ companyName() }}</span>
+      <span class="company-sub">live site monitoring</span>
+    </div>
+
+    <!-- right: 3D human anatomy -->
+    <div class="anatomy-box">
+      <div class="scene">
+        <div class="human" [style.--pulse]="pulseDuration() + 's'">
+          <div class="part head"></div>
+          <div class="part torso">
+            <div class="heart"></div>
+          </div>
+          <div class="part arm left"></div>
+          <div class="part arm right"></div>
+          <div class="part leg left"></div>
+          <div class="part leg right"></div>
+        </div>
+      </div>
+      <div class="anatomy-readout">
+        <span>{{ primaryWorker().name }}</span>
+        <span class="bpm">♥ {{ primaryWorker().heartbeat }} bpm</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ REAL DATA TABLE (first row real, rest dummy) ============ -->
+  <section class="data-band">
+    <div class="table-head">
+      <span class="col-pic"></span>
+      <span>id</span>
+      <span>name</span>
+      <span>is present</span>
+      <span>work</span>
+      <span>attendence</span>
+      <span>heartbeat</span>
+      <span>is hat on</span>
+      <span>gyro</span>
+    </div>
+
+    @for (w of displayWorkers(); track w.id) {
+      <div class="table-row" [class.real]="w.isReal" [class.dummy]="!w.isReal">
+        <span class="col-pic">
+          <span class="avatar" [class.real-avatar]="w.isReal">{{ w.name.charAt(0) }}</span>
+          @if (w.isReal) { <span class="real-tag">// only this one is real</span> }
+        </span>
+        <span class="mono">{{ w.id }}</span>
+        <span>{{ w.name }}</span>
+        <span>
+          <span class="pill" [class.on]="w.isPresent" [class.off]="!w.isPresent">
+            {{ w.isPresent ? 'yes' : 'no' }}
+          </span>
+        </span>
+        <span>{{ w.work }}</span>
+        <span>{{ w.isPresent ? 'present' : 'absent' }}</span>
+        <span class="mono" [class.hot]="w.heartbeat > 110">{{ w.heartbeat }} bpm</span>
+        <span>
+          <span class="pill" [class.on]="w.isHatOn" [class.off]="!w.isHatOn">
+            {{ w.isHatOn ? 'on' : 'off' }}
+          </span>
+        </span>
+        <span class="mono gyro">{{ w.gyro.x }},{{ w.gyro.y }},{{ w.gyro.z }}</span>
+      </div>
+    }
+  </section>
+
+  <!-- ============ DUMMY DATA STRIP ============ -->
+  <section class="dummy-band">
+    <span class="dummy-title">dummy data</span>
+    <p class="dummy-note">
+      we only get <b>humidity</b>, <b>temperature</b>, <b>gas detect</b>, and
+      <b>one person heart beat</b>
+    </p>
+  </section>
+</div>

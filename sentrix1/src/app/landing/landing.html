@@ -1,0 +1,100 @@
+<div class="hero-container">
+  <!-- WebGL backdrop: starfield + haze + ridge line -->
+  <canvas #canvas class="hero-canvas"></canvas>
+
+  <!-- top brand + nav linking the three live tools -->
+  <nav class="top-nav reveal" style="visibility: hidden">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">SENTRIX</span>
+    </a>
+    <div class="nav-links">
+      <a routerLink="/test1">Dashboard</a>
+      <a routerLink="/helmet">Helmet</a>
+      <a routerLink="/helmet2">Detection</a>
+    </div>
+  </nav>
+
+  <!-- vertical side tab, echoing the original hero -->
+  <div class="side-menu" style="visibility: hidden">
+    <div class="menu-icon"><span></span><span></span><span></span></div>
+    <div class="vertical-text">SAFETY</div>
+  </div>
+
+  <!-- first viewport: the pitch -->
+  <header class="hero-content">
+    <span class="eyebrow reveal" style="visibility: hidden">
+      Industrial worker-safety monitoring
+    </span>
+
+    <h1 class="hero-title">
+      @for (ch of splitTitle('SENTRIX'); track $index) {
+        <span class="title-char">{{ ch }}</span>
+      }
+    </h1>
+
+    <div class="hero-subtitle">
+      <p class="subtitle-line">Where every helmet, heartbeat and hazard</p>
+      <p class="subtitle-line">is watched over, in real time.</p>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn primary reveal" routerLink="/test1" style="visibility: hidden">
+        Enter dashboard
+      </a>
+      <a class="btn ghost reveal" routerLink="/helmet" style="visibility: hidden">
+        Live camera
+      </a>
+    </div>
+  </header>
+
+  <!-- scroll progress indicator -->
+  <div class="scroll-progress">
+    <div class="scroll-text">SCROLL</div>
+    <div class="progress-track">
+      <div class="progress-fill" [style.width.%]="scrollProgress() * 100"></div>
+    </div>
+    <div class="section-counter">
+      {{ currentSection().toString().padStart(2, '0') }} /
+      {{ totalSections.toString().padStart(2, '0') }}
+    </div>
+  </div>
+
+  <!-- scroll-through sections that fly the camera deeper -->
+  <div class="scroll-sections">
+    <section class="content-section">
+      <h2 class="section-title">VISION</h2>
+      <div class="section-copy">
+        <p>Computer vision reads the live camera feed and locks onto a hard-hat</p>
+        <p>the moment a worker steps into frame — no wearables required.</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2 class="section-title">VITALS</h2>
+      <div class="section-copy">
+        <p>Heart-rate, gas, temperature and headcount roll up into one</p>
+        <p>calm control surface, so an outlier never goes unseen.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- closing tool grid -->
+  <section class="tools-section">
+    <h2 class="tools-heading">Three tools, one site</h2>
+    <div class="tools-grid">
+      @for (tool of tools; track tool.tag) {
+        <a class="tool-card" [routerLink]="tool.link">
+          <span class="tool-tag">{{ tool.tag }}</span>
+          <h3 class="tool-name">{{ tool.name }}</h3>
+          <p class="tool-desc">{{ tool.desc }}</p>
+          <span class="tool-cta">{{ tool.cta }} →</span>
+        </a>
+      }
+    </div>
+    <footer class="landing-foot">
+      <span>Sentrix · live site monitoring</span>
+      <span class="muted">dummy sensor data for demo — camera detection is real</span>
+    </footer>
+  </section>
+</div>

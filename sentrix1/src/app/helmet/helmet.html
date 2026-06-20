@@ -1,0 +1,28 @@
+<div class="helmet-view">
+  <header class="hv-head">
+    <h2>Helmet Detection <span class="cv-tag">CV / yellow-pixel</span></h2>
+    <div class="status" [class.on]="hatOn()" [class.off]="!hatOn()">
+      <span class="dot"></span>
+      {{ hatOn() ? 'HAT ON — helmet detected' : 'NO HELMET' }}
+    </div>
+  </header>
+
+  <div class="stage">
+    <!-- live webcam (mirrored via CSS) -->
+    <video #video class="cam" playsinline muted></video>
+    <!-- CV overlay drawn on top -->
+    <canvas #overlay class="overlay" width="640" height="480"></canvas>
+
+    @if (!cameraReady() && !errorMsg()) {
+      <div class="loading">Requesting camera…</div>
+    }
+    @if (errorMsg()) {
+      <div class="error">{{ errorMsg() }}</div>
+    }
+  </div>
+
+  <footer class="hv-foot">
+    <span>yellow coverage: <b>{{ (yellowRatio() * 100).toFixed(1) }}%</b></span>
+    <span>show a <b>yellow hard-hat</b> to the camera to trigger detection</span>
+  </footer>
+</div>

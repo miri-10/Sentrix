@@ -1,0 +1,32 @@
+<section class="insights">
+  <header class="insights-head">
+    <a class="back-link" routerLink="/">← Back to home</a>
+    <h1 class="insights-title">Latest from the floor</h1>
+    <p class="insights-sub">
+      Field notes on PPE, vitals and computer vision — everything that keeps a
+      crew safe between shifts.
+    </p>
+  </header>
+
+  <!-- image marquee -->
+  <div
+    class="marquee"
+    (mouseenter)="paused.set(true)"
+    (mouseleave)="paused.set(false)"
+  >
+    <div class="fade left"></div>
+    <div
+      class="marquee-inner"
+      [style.animation-play-state]="paused() ? 'paused' : 'running'"
+      [style.animation-duration]="marqueeDuration"
+    >
+      @for (slide of loop; track $index) {
+        <figure class="slide">
+          <img [src]="slide.image" [alt]="slide.title" loading="lazy" />
+          <figcaption class="slide-cap">{{ slide.title }}</figcaption>
+        </figure>
+      }
+    </div>
+    <div class="fade right"></div>
+  </div>
+</section>

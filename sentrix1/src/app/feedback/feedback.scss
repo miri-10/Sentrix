@@ -1,0 +1,149 @@
+:host {
+  --ink: #c6ccd4;
+  --ink-dim: #767f8b;
+  --accent: #4a8f8a;
+  --line: rgba(255, 255, 255, 0.08);
+
+  display: block;
+  // Sit above the landing's fixed canvas (z-index 0) / overlay (z-index 1).
+  position: relative;
+  z-index: 2;
+  background: #05080b;
+  color: var(--ink);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.feedback {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 6rem;
+}
+
+// ---- header ---------------------------------------------------------------
+.fb-head {
+  max-width: 540px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+.fb-badge {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.fb-title {
+  margin: 1.2rem 0 0;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #e8ecf1;
+}
+.fb-sub {
+  margin: 0.9rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+// ---- columns --------------------------------------------------------------
+.fb-columns {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  max-height: 740px;
+  overflow: hidden;
+  // fade top and bottom edges
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 22%,
+    black 78%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 22%,
+    black 78%,
+    transparent
+  );
+}
+
+.fb-col {
+  flex: 0 0 auto;
+  width: 20rem;
+  max-width: 80vw;
+}
+
+.fb-track {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  animation: fbScroll linear infinite;
+  will-change: transform;
+}
+// pause when the visitor hovers a column to read it
+.fb-col:hover .fb-track {
+  animation-play-state: paused;
+}
+
+@keyframes fbScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+// ---- card -----------------------------------------------------------------
+.fb-card {
+  margin: 0;
+  padding: 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.fb-text {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #d4d9e0;
+}
+.fb-author {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.3rem;
+}
+.fb-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.9);
+}
+.fb-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.fb-name {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #e3e8ee;
+}
+.fb-role {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+// ---- responsive: drop extra columns on smaller screens --------------------
+@media (max-width: 1023px) {
+  .hide-lg { display: none; }
+}
+@media (max-width: 767px) {
+  .hide-md { display: none; }
+}

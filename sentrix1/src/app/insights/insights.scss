@@ -1,0 +1,171 @@
+:host {
+  --ink: #c6ccd4;
+  --ink-dim: #767f8b;
+  --accent: #4a8f8a;
+  --amber: #b8893f;
+  --line: rgba(255, 255, 255, 0.08);
+
+  display: block;
+  // Sit ABOVE the landing's fixed WebGL canvas (z-index 0) and its fixed
+  // vignette overlay (z-index 1) — otherwise this static block paints behind
+  // them and is invisible. Opaque background covers the starfield.
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  background: #05080b;
+  color: var(--ink);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.insights {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+}
+
+.insights-head {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.6rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.25s ease;
+  &:hover { color: var(--ink); }
+}
+.insights-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #e8ecf1;
+}
+.insights-sub {
+  margin: 0.9rem auto 0;
+  max-width: 520px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+// ---- article cards --------------------------------------------------------
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+.card {
+  width: 100%;
+  max-width: 18rem;
+  transition: transform 0.3s ease;
+  &:hover { transform: translateY(-4px); }
+}
+.card-media {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 4 / 3;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    // calm the stock photos so the page never feels bright
+    filter: brightness(0.82) saturate(0.85);
+    transition: filter 0.3s ease, transform 0.4s ease;
+  }
+}
+.card:hover .card-media img {
+  filter: brightness(0.95) saturate(0.95);
+  transform: scale(1.04);
+}
+.card-title {
+  margin: 0.9rem 0 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #e3e8ee;
+}
+.card-cat {
+  margin: 0.4rem 0 0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+// ---- marquee --------------------------------------------------------------
+.marquee {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 4.5rem;
+}
+.marquee-inner {
+  display: flex;
+  width: fit-content;
+  animation: marqueeScroll linear infinite;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.slide {
+  position: relative;
+  flex: 0 0 auto;
+  width: 14rem;
+  height: 20rem;
+  margin: 0 1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.78) saturate(0.85);
+    transition: transform 0.4s ease, filter 0.4s ease;
+  }
+}
+.slide:hover img {
+  transform: scale(1.06);
+  filter: brightness(0.95);
+}
+.slide-cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 1.4rem 1rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.75));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.slide:hover .slide-cap { opacity: 1; }
+
+// edge fades matching the dark background
+.fade {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 6rem;
+  z-index: 2;
+  pointer-events: none;
+  &.left { left: 0; background: linear-gradient(90deg, #05080b, transparent); }
+  &.right { right: 0; width: 9rem; background: linear-gradient(270deg, #05080b, transparent); }
+}
+
+@media (max-width: 640px) {
+  .fade { width: 3rem; }
+  .fade.right { width: 4rem; }
+}
